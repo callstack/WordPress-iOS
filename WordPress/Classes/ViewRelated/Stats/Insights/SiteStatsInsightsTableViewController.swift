@@ -93,7 +93,6 @@ class SiteStatsInsightsTableViewController: UITableViewController, StoryboardLoa
         ImmuTable.registerRows(tableRowTypes(), tableView: tableView)
         loadInsightsFromUserDefaults()
         initViewModel()
-        displayLoadingViewIfNecessary()
         tableView.estimatedRowHeight = 500
     }
 
@@ -124,10 +123,6 @@ private extension SiteStatsInsightsTableViewController {
         }
 
         insightsChangeReceipt = viewModel?.onChange { [weak self] in
-            if let viewModel = self?.viewModel,
-                viewModel.isFetchingOverview() {
-                    return
-            }
             self?.refreshTableView()
         }
     }
@@ -150,9 +145,7 @@ private extension SiteStatsInsightsTableViewController {
     // MARK: - Table Refreshing
 
     func refreshTableView() {
-
-        guard let viewModel = viewModel,
-            viewIsVisible() else {
+        guard let viewModel = viewModel else {
                 return
         }
 
@@ -161,8 +154,6 @@ private extension SiteStatsInsightsTableViewController {
         if viewModel.fetchingFailed() &&
             !viewModel.containsCachedData() {
             displayFailureViewIfNecessary()
-        } else {
-            hideNoResults()
         }
 
         refreshControl?.endRefreshing()
@@ -228,19 +219,6 @@ private extension SiteStatsInsightsTableViewController {
 }
 
 extension SiteStatsInsightsTableViewController: NoResultsViewHost {
-    private func displayLoadingViewIfNecessary() {
-        guard tableHandler.viewModel.sections.isEmpty else {
-            return
-        }
-
-        configureAndDisplayNoResults(on: tableView,
-                                     title: NoResultConstants.successTitle,
-                                     accessoryView: NoResultsViewController.loadingAccessoryView()) { [weak self] noResults in
-                                        noResults.delegate = self
-                                        noResults.hideImageView(false)
-        }
-    }
-
     private func displayFailureViewIfNecessary() {
         guard tableHandler.viewModel.sections.isEmpty else {
             return
