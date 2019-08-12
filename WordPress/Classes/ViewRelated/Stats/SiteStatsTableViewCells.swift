@@ -1,8 +1,31 @@
 import UIKit
 
+enum StatsImmutableRowState {
+    case loading
+    case success
+    case failure(Error)
+
+    static var IdentifiableKey = "StatsImmutableRowStateIdentifiableKey"
+}
+
+protocol StatsImmutableRow: ImmuTableRow {
+    var state: StatsImmutableRowState { get set }
+}
+
+extension StatsImmutableRow {
+    var state: StatsImmutableRowState {
+        get {
+            return (objc_getAssociatedObject(self, &StatsImmutableRowState.IdentifiableKey) as? StatsImmutableRowState) ?? .loading
+        }
+        set {
+            objc_setAssociatedObject(self, &StatsImmutableRowState.IdentifiableKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+}
+
 // MARK: - Shared Rows
 
-struct OverviewRow: ImmuTableRow {
+struct OverviewRow: StatsImmutableRow {
 
     typealias CellType = OverviewCell
 
@@ -28,7 +51,7 @@ struct OverviewRow: ImmuTableRow {
     }
 }
 
-struct CellHeaderRow: ImmuTableRow {
+struct CellHeaderRow: StatsImmutableRow {
 
     typealias CellType = StatsCellHeader
 
@@ -49,7 +72,7 @@ struct CellHeaderRow: ImmuTableRow {
     }
 }
 
-struct TableFooterRow: ImmuTableRow {
+struct TableFooterRow: StatsImmutableRow {
 
     typealias CellType = StatsTableFooter
 
@@ -67,7 +90,7 @@ struct TableFooterRow: ImmuTableRow {
 
 // MARK: - Insights Rows
 
-struct CustomizeInsightsRow: ImmuTableRow {
+struct CustomizeInsightsRow: StatsImmutableRow {
 
     typealias CellType = CustomizeInsightsCell
 
@@ -89,7 +112,7 @@ struct CustomizeInsightsRow: ImmuTableRow {
 
 }
 
-struct LatestPostSummaryRow: ImmuTableRow {
+struct LatestPostSummaryRow: StatsImmutableRow {
 
     typealias CellType = LatestPostSummaryCell
 
@@ -112,7 +135,7 @@ struct LatestPostSummaryRow: ImmuTableRow {
     }
 }
 
-struct PostingActivityRow: ImmuTableRow {
+struct PostingActivityRow: StatsImmutableRow {
 
     typealias CellType = PostingActivityCell
 
@@ -134,7 +157,7 @@ struct PostingActivityRow: ImmuTableRow {
     }
 }
 
-struct TabbedTotalsStatsRow: ImmuTableRow {
+struct TabbedTotalsStatsRow: StatsImmutableRow {
 
     typealias CellType = TabbedTotalsCell
 
@@ -159,7 +182,7 @@ struct TabbedTotalsStatsRow: ImmuTableRow {
     }
 }
 
-struct TopTotalsInsightStatsRow: ImmuTableRow {
+struct TopTotalsInsightStatsRow: StatsImmutableRow {
 
     typealias CellType = TopTotalsCell
 
@@ -189,7 +212,7 @@ struct TopTotalsInsightStatsRow: ImmuTableRow {
     }
 }
 
-struct TwoColumnStatsRow: ImmuTableRow {
+struct TwoColumnStatsRow: StatsImmutableRow {
 
     typealias CellType = TwoColumnCell
 
@@ -214,7 +237,7 @@ struct TwoColumnStatsRow: ImmuTableRow {
 
 // MARK: - Insights Management
 
-struct AddInsightRow: ImmuTableRow {
+struct AddInsightRow: StatsImmutableRow {
 
     typealias CellType = TopTotalsCell
 
@@ -236,7 +259,7 @@ struct AddInsightRow: ImmuTableRow {
     }
 }
 
-struct AddInsightStatRow: ImmuTableRow {
+struct AddInsightStatRow: StatsImmutableRow {
     static let cell = ImmuTableCell.class(WPTableViewCellDefault.self)
 
     let title: String
@@ -256,7 +279,7 @@ struct AddInsightStatRow: ImmuTableRow {
 
 // MARK: - Period Rows
 
-struct TopTotalsPeriodStatsRow: ImmuTableRow {
+struct TopTotalsPeriodStatsRow: StatsImmutableRow {
 
     typealias CellType = TopTotalsCell
 
@@ -283,7 +306,7 @@ struct TopTotalsPeriodStatsRow: ImmuTableRow {
     }
 }
 
-struct TopTotalsNoSubtitlesPeriodStatsRow: ImmuTableRow {
+struct TopTotalsNoSubtitlesPeriodStatsRow: StatsImmutableRow {
 
     typealias CellType = TopTotalsCell
 
@@ -305,7 +328,7 @@ struct TopTotalsNoSubtitlesPeriodStatsRow: ImmuTableRow {
     }
 }
 
-struct CountriesStatsRow: ImmuTableRow {
+struct CountriesStatsRow: StatsImmutableRow {
 
     typealias CellType = CountriesCell
 
@@ -332,7 +355,7 @@ struct CountriesStatsRow: ImmuTableRow {
     }
 }
 
-struct CountriesMapRow: ImmuTableRow {
+struct CountriesMapRow: StatsImmutableRow {
     let action: ImmuTableAction? = nil
     let countriesMap: CountriesMap
 
@@ -352,7 +375,7 @@ struct CountriesMapRow: ImmuTableRow {
 
 // MARK: - Post Stats Rows
 
-struct PostStatsTitleRow: ImmuTableRow {
+struct PostStatsTitleRow: StatsImmutableRow {
 
     typealias CellType = PostStatsTitleCell
 
@@ -375,7 +398,7 @@ struct PostStatsTitleRow: ImmuTableRow {
     }
 }
 
-struct TopTotalsPostStatsRow: ImmuTableRow {
+struct TopTotalsPostStatsRow: StatsImmutableRow {
 
     typealias CellType = TopTotalsCell
 
@@ -404,7 +427,7 @@ struct TopTotalsPostStatsRow: ImmuTableRow {
     }
 }
 
-struct PostStatsEmptyCellHeaderRow: ImmuTableRow {
+struct PostStatsEmptyCellHeaderRow: StatsImmutableRow {
 
     typealias CellType = StatsCellHeader
 
@@ -426,7 +449,7 @@ struct PostStatsEmptyCellHeaderRow: ImmuTableRow {
 
 // MARK: - Detail Rows
 
-struct DetailDataRow: ImmuTableRow {
+struct DetailDataRow: StatsImmutableRow {
 
     typealias CellType = DetailDataCell
 
@@ -453,7 +476,7 @@ struct DetailDataRow: ImmuTableRow {
     }
 }
 
-struct DetailExpandableRow: ImmuTableRow {
+struct DetailExpandableRow: StatsImmutableRow {
 
     typealias CellType = DetailDataCell
 
@@ -483,7 +506,7 @@ struct DetailExpandableRow: ImmuTableRow {
     }
 }
 
-struct DetailExpandableChildRow: ImmuTableRow {
+struct DetailExpandableChildRow: StatsImmutableRow {
 
     typealias CellType = DetailDataCell
 
@@ -513,7 +536,7 @@ struct DetailExpandableChildRow: ImmuTableRow {
     }
 }
 
-struct DetailSubtitlesHeaderRow: ImmuTableRow {
+struct DetailSubtitlesHeaderRow: StatsImmutableRow {
 
     typealias CellType = TopTotalsCell
 
@@ -535,7 +558,7 @@ struct DetailSubtitlesHeaderRow: ImmuTableRow {
     }
 }
 
-struct DetailSubtitlesCountriesHeaderRow: ImmuTableRow {
+struct DetailSubtitlesCountriesHeaderRow: StatsImmutableRow {
 
     typealias CellType = CountriesCell
 
@@ -557,7 +580,7 @@ struct DetailSubtitlesCountriesHeaderRow: ImmuTableRow {
     }
 }
 
-struct DetailSubtitlesTabbedHeaderRow: ImmuTableRow {
+struct DetailSubtitlesTabbedHeaderRow: StatsImmutableRow {
 
     typealias CellType = TabbedTotalsCell
 
