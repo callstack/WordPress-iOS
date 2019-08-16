@@ -28,6 +28,7 @@ class LatestPostSummaryCell: UITableViewCell, NibLoadable {
     private var lastPostInsight: StatsLastPostInsight?
     private var lastPostDetails: StatsPostDetails?
     private var postTitle = StatSection.noPostTitle
+    private var rowStatus: StoreFetchingStatus = .idle
 
     private var actionType: ActionType? {
         didSet {
@@ -47,9 +48,10 @@ class LatestPostSummaryCell: UITableViewCell, NibLoadable {
         removeRowsFromStackView(rowsStackView)
     }
 
-    func configure(withInsightData lastPostInsight: StatsLastPostInsight?, chartData: StatsPostDetails?, andDelegate delegate: SiteStatsInsightsDelegate?) {
+    func configure(withInsightData lastPostInsight: StatsLastPostInsight?, chartData: StatsPostDetails?, andDelegate delegate: SiteStatsInsightsDelegate?, rowStatus: StoreFetchingStatus) {
 
         siteStatsInsightsDelegate = delegate
+        self.rowStatus = rowStatus
 
         // If there is no summary data, there is no post. Show Create Post option.
         guard let lastPostInsight = lastPostInsight else {

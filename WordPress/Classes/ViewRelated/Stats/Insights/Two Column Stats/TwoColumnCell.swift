@@ -16,6 +16,7 @@ class TwoColumnCell: UITableViewCell, NibLoadable {
     private var dataRows = [StatsTwoColumnRowData]()
     private var statSection: StatSection?
     private weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
+    private var rowStatus: StoreFetchingStatus = .loading
 
     // MARK: - View
 
@@ -29,10 +30,11 @@ class TwoColumnCell: UITableViewCell, NibLoadable {
         removeRowsFromStackView(rowsStackView)
     }
 
-    func configure(dataRows: [StatsTwoColumnRowData], statSection: StatSection, siteStatsInsightsDelegate: SiteStatsInsightsDelegate?) {
+    func configure(dataRows: [StatsTwoColumnRowData], statSection: StatSection, siteStatsInsightsDelegate: SiteStatsInsightsDelegate?, rowStatus: StoreFetchingStatus = .loading) {
         self.dataRows = dataRows
         self.statSection = statSection
         self.siteStatsInsightsDelegate = siteStatsInsightsDelegate
+        self.rowStatus = rowStatus
         addRows()
         toggleViewMore()
     }
@@ -52,7 +54,7 @@ private extension TwoColumnCell {
     func addRows() {
         guard !dataRows.isEmpty else {
             let row = StatsNoDataRow.loadFromNib()
-            row.configure(forType: .insights)
+            row.configure(forType: .insights, rowStatus: rowStatus)
             rowsStackView.addArrangedSubview(row)
             return
         }
