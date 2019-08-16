@@ -50,8 +50,7 @@ class SiteStatsInsightsViewModel: Observable {
 
         var tableRows = [ImmuTableRow]()
 
-        if insightsStore.fetchingFailed(for: .insights) &&
-            !insightsStore.containsCachedData {
+        if insightsStore.fetchingFailed(for: .insights) {
             return ImmuTable.Empty
         }
 
@@ -65,22 +64,26 @@ class SiteStatsInsightsViewModel: Observable {
                 tableRows.append(CellHeaderRow(title: StatSection.insightsLatestPostSummary.title))
                 tableRows.append(LatestPostSummaryRow(summaryData: insightsStore.getLastPostInsight(),
                                                       chartData: insightsStore.getPostStats(),
-                                                      siteStatsInsightsDelegate: siteStatsInsightsDelegate))
+                                                      siteStatsInsightsDelegate: siteStatsInsightsDelegate,
+                                                      rowStatus: insightsStore.lastPostSummaryStatus))
             case .allTimeStats:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsAllTime.title))
                 tableRows.append(TwoColumnStatsRow(dataRows: createAllTimeStatsRows(),
                                                    statSection: .insightsAllTime,
-                                                   siteStatsInsightsDelegate: nil))
+                                                   siteStatsInsightsDelegate: nil,
+                                                   rowStatus: insightsStore.allTimeStatus))
             case .followersTotals:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsFollowerTotals.title))
                 tableRows.append(TwoColumnStatsRow(dataRows: createTotalFollowersRows(),
                                                    statSection: .insightsFollowerTotals,
-                                                   siteStatsInsightsDelegate: nil))
+                                                   siteStatsInsightsDelegate: nil,
+                                                   rowStatus: insightsStore.followersTotalsStatus))
             case .mostPopularTime:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsMostPopularTime.title))
                 tableRows.append(TwoColumnStatsRow(dataRows: createMostPopularStatsRows(),
                                                    statSection: .insightsMostPopularTime,
-                                                   siteStatsInsightsDelegate: nil))
+                                                   siteStatsInsightsDelegate: nil,
+                                                   rowStatus: insightsStore.annualAndMostPopularTimeStatus))
             case .tagsAndCategories:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsTagsAndCategories.title))
                 tableRows.append(TopTotalsInsightStatsRow(itemSubtitle: StatSection.insightsTagsAndCategories.itemSubtitle,
@@ -91,7 +94,8 @@ class SiteStatsInsightsViewModel: Observable {
                 tableRows.append(CellHeaderRow(title: StatSection.insightsAnnualSiteStats.title))
                 tableRows.append(TwoColumnStatsRow(dataRows: createAnnualRows(),
                                                    statSection: .insightsAnnualSiteStats,
-                                                   siteStatsInsightsDelegate: siteStatsInsightsDelegate))
+                                                   siteStatsInsightsDelegate: siteStatsInsightsDelegate,
+                                                   rowStatus: insightsStore.annualAndMostPopularTimeStatus))
             case .comments:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsCommentsPosts.title))
                 tableRows.append(createCommentsRow())
@@ -102,7 +106,8 @@ class SiteStatsInsightsViewModel: Observable {
                 tableRows.append(CellHeaderRow(title: StatSection.insightsTodaysStats.title))
                 tableRows.append(TwoColumnStatsRow(dataRows: createTodaysStatsRows(),
                                                    statSection: .insightsTodaysStats,
-                                                   siteStatsInsightsDelegate: nil))
+                                                   siteStatsInsightsDelegate: nil,
+                                                   rowStatus: insightsStore.todaysStatsStatus))
             case .postingActivity:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsPostingActivity.title))
                 tableRows.append(createPostingActivityRow())
@@ -134,10 +139,6 @@ class SiteStatsInsightsViewModel: Observable {
 
     func fetchingFailed() -> Bool {
         return insightsStore.fetchingFailed(for: .insights)
-    }
-
-    func containsCachedData() -> Bool {
-        return insightsStore.containsCachedData
     }
 
     func yearlyPostingActivity(from date: Date = Date()) -> [[PostingStreakEvent]] {
