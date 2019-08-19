@@ -57,6 +57,7 @@ class TabbedTotalsCell: UITableViewCell, NibLoadable {
     private weak var siteStatsDetailsDelegate: SiteStatsDetailsDelegate?
     private var showTotalCount = false
     private var forDetails = false
+    private var rowStatus: StoreFetchingStatus = .idle
 
     // MARK: - Configure
 
@@ -65,12 +66,14 @@ class TabbedTotalsCell: UITableViewCell, NibLoadable {
                    siteStatsDetailsDelegate: SiteStatsDetailsDelegate? = nil,
                    showTotalCount: Bool,
                    selectedIndex: Int = 0,
-                   forDetails: Bool = false) {
+                   forDetails: Bool = false,
+                   rowStatus: StoreFetchingStatus) {
         self.tabsData = tabsData
         self.siteStatsInsightsDelegate = siteStatsInsightsDelegate
         self.siteStatsDetailsDelegate = siteStatsDetailsDelegate
         self.showTotalCount = showTotalCount
         self.forDetails = forDetails
+        self.rowStatus = rowStatus
         bottomSeparatorLine.isHidden = forDetails
         setupFilterBar(selectedIndex: selectedIndex)
         addRowsForSelectedFilter()
@@ -146,7 +149,7 @@ private extension TabbedTotalsCell {
                 limitRowsDisplayed: true,
                 rowDelegate: self,
                 viewMoreDelegate: self,
-                rowStatus: .idle)
+                rowStatus: rowStatus)
     }
 
 }

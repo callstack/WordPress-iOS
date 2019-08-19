@@ -22,9 +22,10 @@ class PostingActivityCell: UITableViewCell, NibLoadable {
         addLegend()
     }
 
-    func configure(withData monthsData: [[PostingStreakEvent]], andDelegate delegate: SiteStatsInsightsDelegate?) {
+    func configure(withData monthsData: [[PostingStreakEvent]], andDelegate delegate: SiteStatsInsightsDelegate?, rowStatus: StoreFetchingStatus) {
         siteStatsInsightsDelegate = delegate
         addMonths(monthsData: monthsData)
+        animateGhostView(rowStatus == .loading)
     }
 
     override func prepareForReuse() {
@@ -36,6 +37,13 @@ class PostingActivityCell: UITableViewCell, NibLoadable {
 // MARK: - Private Extension
 
 private extension PostingActivityCell {
+    func animateGhostView(_ animate: Bool) {
+        if animate {
+            startGhostAnimation()
+        } else {
+            stopGhostAnimation()
+        }
+    }
 
     func applyStyles() {
         viewMoreLabel.text = NSLocalizedString("View more", comment: "Label for viewing more posting activity.")

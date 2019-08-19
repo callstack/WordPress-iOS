@@ -124,6 +124,7 @@ struct PostingActivityRow: ImmuTableRow {
     let monthsData: [[PostingStreakEvent]]
     weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
     let action: ImmuTableAction? = nil
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -131,7 +132,7 @@ struct PostingActivityRow: ImmuTableRow {
             return
         }
 
-        cell.configure(withData: monthsData, andDelegate: siteStatsInsightsDelegate)
+        cell.configure(withData: monthsData, andDelegate: siteStatsInsightsDelegate, rowStatus: rowStatus)
     }
 }
 
@@ -147,6 +148,7 @@ struct TabbedTotalsStatsRow: ImmuTableRow {
     weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
     let showTotalCount: Bool
     let action: ImmuTableAction? = nil
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -156,7 +158,8 @@ struct TabbedTotalsStatsRow: ImmuTableRow {
 
         cell.configure(tabsData: tabsData,
                        siteStatsInsightsDelegate: siteStatsInsightsDelegate,
-                       showTotalCount: showTotalCount)
+                       showTotalCount: showTotalCount,
+                       rowStatus: rowStatus)
     }
 }
 
@@ -592,6 +595,7 @@ struct DetailSubtitlesTabbedHeaderRow: ImmuTableRow {
                        siteStatsDetailsDelegate: siteStatsDetailsDelegate,
                        showTotalCount: showTotalCount,
                        selectedIndex: selectedIndex,
-                       forDetails: true)
+                       forDetails: true,
+                       rowStatus: .idle)
     }
 }
