@@ -41,7 +41,8 @@ class TopTotalsCell: UITableViewCell, NibLoadable {
                    siteStatsDetailsDelegate: SiteStatsDetailsDelegate? = nil,
                    postStatsDelegate: PostStatsDelegate? = nil,
                    limitRowsDisplayed: Bool = true,
-                   forDetails: Bool = false) {
+                   forDetails: Bool = false,
+                   rowStatus: StoreFetchingStatus) {
         itemSubtitleLabel.text = itemSubtitle
         dataSubtitleLabel.text = dataSubtitle
         subtitlesProvided = (itemSubtitle != nil && dataSubtitle != nil)
@@ -59,7 +60,8 @@ class TopTotalsCell: UITableViewCell, NibLoadable {
                     forType: siteStatsPeriodDelegate != nil ? .period : .insights,
                     limitRowsDisplayed: limitRowsDisplayed,
                     rowDelegate: self,
-                    viewMoreDelegate: self)
+                    viewMoreDelegate: self,
+                    rowStatus: rowStatus)
 
             initChildRows()
         }

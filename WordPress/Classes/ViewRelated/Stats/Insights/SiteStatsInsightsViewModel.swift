@@ -81,22 +81,22 @@ class SiteStatsInsightsViewModel: Observable {
                 tableRows.append(createTwoColumnStatsRow(dataRows: createMostPopularStatsRows(),
                                                          statSection: .insightsMostPopularTime,
                                                          rowStatus: insightsStore.annualAndMostPopularTimeStatus))
-            case .tagsAndCategories:
+            case .tagsAndCategories: // TO DO
                 tableRows.append(CellHeaderRow(title: StatSection.insightsTagsAndCategories.title))
                 tableRows.append(TopTotalsInsightStatsRow(itemSubtitle: StatSection.insightsTagsAndCategories.itemSubtitle,
                                                    dataSubtitle: StatSection.insightsTagsAndCategories.dataSubtitle,
                                                    dataRows: createTagsAndCategoriesRows(),
-                                                   siteStatsInsightsDelegate: siteStatsInsightsDelegate))
+                                                   siteStatsInsightsDelegate: siteStatsInsightsDelegate, rowStatus: .loading))
             case .annualSiteStats:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsAnnualSiteStats.title))
                 tableRows.append(createTwoColumnStatsRow(dataRows: createAnnualRows(),
                                                          statSection: .insightsAnnualSiteStats,
                                                          siteStatsInsightsDelegate: siteStatsInsightsDelegate,
                                                          rowStatus: insightsStore.annualAndMostPopularTimeStatus))
-            case .comments:
+            case .comments:  // TO DO
                 tableRows.append(CellHeaderRow(title: StatSection.insightsCommentsPosts.title))
                 tableRows.append(createCommentsRow())
-            case .followers:
+            case .followers:  // TO DO
                 tableRows.append(CellHeaderRow(title: StatSection.insightsFollowersWordPress.title))
                 tableRows.append(createFollowersRow())
             case .todaysStats:
@@ -104,15 +104,15 @@ class SiteStatsInsightsViewModel: Observable {
                 tableRows.append(createTwoColumnStatsRow(dataRows: createTodaysStatsRows(),
                                                          statSection: .insightsTodaysStats,
                                                          rowStatus: insightsStore.todaysStatsStatus))
-            case .postingActivity:
+            case .postingActivity: // TO DO
                 tableRows.append(CellHeaderRow(title: StatSection.insightsPostingActivity.title))
                 tableRows.append(createPostingActivityRow())
-            case .publicize:
+            case .publicize: // TO DO
                 tableRows.append(CellHeaderRow(title: StatSection.insightsPublicize.title))
                 tableRows.append(TopTotalsInsightStatsRow(itemSubtitle: StatSection.insightsPublicize.itemSubtitle,
                                                           dataSubtitle: StatSection.insightsPublicize.dataSubtitle,
                                                           dataRows: createPublicizeRows(),
-                                                          siteStatsInsightsDelegate: nil))
+                                                          siteStatsInsightsDelegate: nil, rowStatus: .loading))
             }
         }
 

@@ -145,7 +145,8 @@ private extension TabbedTotalsCell {
                 forType: .insights,
                 limitRowsDisplayed: true,
                 rowDelegate: self,
-                viewMoreDelegate: self)
+                viewMoreDelegate: self,
+                rowStatus: .idle)
     }
 
 }

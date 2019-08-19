@@ -26,7 +26,8 @@ class CountriesCell: UITableViewCell, NibLoadable {
                    dataSubtitle: String,
                    dataRows: [StatsTotalRowData],
                    siteStatsPeriodDelegate: SiteStatsPeriodDelegate? = nil,
-                   forDetails: Bool = false) {
+                   forDetails: Bool = false,
+                   rowStatus: StoreFetchingStatus) {
         itemSubtitleLabel.text = itemSubtitle
         dataSubtitleLabel.text = dataSubtitle
         self.dataRows = dataRows
@@ -39,7 +40,8 @@ class CountriesCell: UITableViewCell, NibLoadable {
                 toStackView: rowsStackView,
                 forType: .period,
                 limitRowsDisplayed: true,
-                viewMoreDelegate: self)
+                viewMoreDelegate: self,
+                rowStatus: rowStatus)
         }
 
         setSubtitleVisibility()

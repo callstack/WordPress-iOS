@@ -101,7 +101,7 @@ struct LatestPostSummaryRow: ImmuTableRow {
     let chartData: StatsPostDetails?
     weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
     let action: ImmuTableAction? = nil
-    var rowStatus: StoreFetchingStatus
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -173,6 +173,7 @@ struct TopTotalsInsightStatsRow: ImmuTableRow {
     let dataRows: [StatsTotalRowData]
     weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
     let action: ImmuTableAction? = nil
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -186,7 +187,8 @@ struct TopTotalsInsightStatsRow: ImmuTableRow {
                        dataSubtitle: dataSubtitle,
                        dataRows: dataRows,
                        siteStatsInsightsDelegate: siteStatsInsightsDelegate,
-                       limitRowsDisplayed: limitRowsDisplayed)
+                       limitRowsDisplayed: limitRowsDisplayed,
+                       rowStatus: rowStatus)
     }
 }
 
@@ -234,7 +236,7 @@ struct AddInsightRow: ImmuTableRow {
             return
         }
 
-        cell.configure(dataRows: [dataRow], siteStatsInsightsDelegate: siteStatsInsightsDelegate)
+        cell.configure(dataRows: [dataRow], siteStatsInsightsDelegate: siteStatsInsightsDelegate, rowStatus: .idle)
     }
 }
 
@@ -271,6 +273,7 @@ struct TopTotalsPeriodStatsRow: ImmuTableRow {
     let dataRows: [StatsTotalRowData]
     weak var siteStatsPeriodDelegate: SiteStatsPeriodDelegate?
     let action: ImmuTableAction? = nil
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -281,7 +284,8 @@ struct TopTotalsPeriodStatsRow: ImmuTableRow {
         cell.configure(itemSubtitle: itemSubtitle,
                        dataSubtitle: dataSubtitle,
                        dataRows: dataRows,
-                       siteStatsPeriodDelegate: siteStatsPeriodDelegate)
+                       siteStatsPeriodDelegate: siteStatsPeriodDelegate,
+                       rowStatus: rowStatus)
     }
 }
 
@@ -296,6 +300,7 @@ struct TopTotalsNoSubtitlesPeriodStatsRow: ImmuTableRow {
     let dataRows: [StatsTotalRowData]
     weak var siteStatsPeriodDelegate: SiteStatsPeriodDelegate?
     let action: ImmuTableAction? = nil
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -303,7 +308,7 @@ struct TopTotalsNoSubtitlesPeriodStatsRow: ImmuTableRow {
             return
         }
 
-        cell.configure(dataRows: dataRows, siteStatsPeriodDelegate: siteStatsPeriodDelegate)
+        cell.configure(dataRows: dataRows, siteStatsPeriodDelegate: siteStatsPeriodDelegate, rowStatus: rowStatus)
     }
 }
 
@@ -320,6 +325,7 @@ struct CountriesStatsRow: ImmuTableRow {
     let dataRows: [StatsTotalRowData]
     weak var siteStatsPeriodDelegate: SiteStatsPeriodDelegate?
     let action: ImmuTableAction? = nil
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -330,7 +336,8 @@ struct CountriesStatsRow: ImmuTableRow {
         cell.configure(itemSubtitle: itemSubtitle,
                        dataSubtitle: dataSubtitle,
                        dataRows: dataRows,
-                       siteStatsPeriodDelegate: siteStatsPeriodDelegate)
+                       siteStatsPeriodDelegate: siteStatsPeriodDelegate,
+                       rowStatus: rowStatus)
     }
 }
 
@@ -391,6 +398,7 @@ struct TopTotalsPostStatsRow: ImmuTableRow {
     let limitRowsDisplayed: Bool
     weak var postStatsDelegate: PostStatsDelegate?
     let action: ImmuTableAction? = nil
+    let rowStatus: StoreFetchingStatus
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -402,7 +410,8 @@ struct TopTotalsPostStatsRow: ImmuTableRow {
                        dataSubtitle: dataSubtitle,
                        dataRows: dataRows,
                        postStatsDelegate: postStatsDelegate,
-                       limitRowsDisplayed: limitRowsDisplayed)
+                       limitRowsDisplayed: limitRowsDisplayed,
+                       rowStatus: rowStatus)
     }
 }
 
@@ -533,7 +542,7 @@ struct DetailSubtitlesHeaderRow: ImmuTableRow {
             return
         }
 
-        cell.configure(itemSubtitle: itemSubtitle, dataSubtitle: dataSubtitle, dataRows: [], forDetails: true)
+        cell.configure(itemSubtitle: itemSubtitle, dataSubtitle: dataSubtitle, dataRows: [], forDetails: true, rowStatus: .idle)
     }
 }
 
@@ -555,7 +564,7 @@ struct DetailSubtitlesCountriesHeaderRow: ImmuTableRow {
             return
         }
 
-        cell.configure(itemSubtitle: itemSubtitle, dataSubtitle: dataSubtitle, dataRows: [], forDetails: true)
+        cell.configure(itemSubtitle: itemSubtitle, dataSubtitle: dataSubtitle, dataRows: [], forDetails: true, rowStatus: .idle)
     }
 }
 

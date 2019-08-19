@@ -269,7 +269,8 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(TopTotalsPeriodStatsRow(itemSubtitle: StatSection.periodPostsAndPages.itemSubtitle,
                                                  dataSubtitle: StatSection.periodPostsAndPages.dataSubtitle,
                                                  dataRows: postsAndPagesDataRows(),
-                                                 siteStatsPeriodDelegate: periodDelegate))
+                                                 siteStatsPeriodDelegate: periodDelegate,
+                                                 rowStatus: .idle))
 
         return tableRows
     }
@@ -308,7 +309,8 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(TopTotalsPeriodStatsRow(itemSubtitle: StatSection.periodReferrers.itemSubtitle,
                                                  dataSubtitle: StatSection.periodReferrers.dataSubtitle,
                                                  dataRows: referrersDataRows(),
-                                                 siteStatsPeriodDelegate: periodDelegate))
+                                                 siteStatsPeriodDelegate: periodDelegate,
+                                                 rowStatus: .idle))
 
         return tableRows
     }
@@ -348,7 +350,7 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(TopTotalsPeriodStatsRow(itemSubtitle: StatSection.periodClicks.itemSubtitle,
                                                  dataSubtitle: StatSection.periodClicks.dataSubtitle,
                                                  dataRows: clicksDataRows(),
-                                                 siteStatsPeriodDelegate: periodDelegate))
+                                                 siteStatsPeriodDelegate: periodDelegate, rowStatus: .idle))
 
         return tableRows
     }
@@ -373,7 +375,7 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(TopTotalsPeriodStatsRow(itemSubtitle: StatSection.periodAuthors.itemSubtitle,
                                                  dataSubtitle: StatSection.periodAuthors.dataSubtitle,
                                                  dataRows: authorsDataRows(),
-                                                 siteStatsPeriodDelegate: periodDelegate))
+                                                 siteStatsPeriodDelegate: periodDelegate, rowStatus: .idle))
 
         return tableRows
     }
@@ -401,7 +403,7 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(CountriesStatsRow(itemSubtitle: StatSection.periodCountries.itemSubtitle,
                                            dataSubtitle: StatSection.periodCountries.dataSubtitle,
                                            dataRows: countriesDataRows(),
-                                           siteStatsPeriodDelegate: periodDelegate))
+                                           siteStatsPeriodDelegate: periodDelegate, rowStatus: .idle))
         return tableRows
     }
 
@@ -430,7 +432,7 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(TopTotalsPeriodStatsRow(itemSubtitle: StatSection.periodSearchTerms.itemSubtitle,
                                                  dataSubtitle: StatSection.periodSearchTerms.dataSubtitle,
                                                  dataRows: searchTermsDataRows(),
-                                                 siteStatsPeriodDelegate: periodDelegate))
+                                                 siteStatsPeriodDelegate: periodDelegate, rowStatus: .idle))
 
         return tableRows
     }
@@ -463,7 +465,7 @@ private extension SiteStatsPeriodViewModel {
         var tableRows = [ImmuTableRow]()
         tableRows.append(CellHeaderRow(title: StatSection.periodPublished.title))
         tableRows.append(TopTotalsNoSubtitlesPeriodStatsRow(dataRows: publishedDataRows(),
-                                                            siteStatsPeriodDelegate: periodDelegate))
+                                                            siteStatsPeriodDelegate: periodDelegate, rowStatus: .idle))
 
         return tableRows
     }
@@ -483,7 +485,7 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(TopTotalsPeriodStatsRow(itemSubtitle: StatSection.periodVideos.itemSubtitle,
                                                  dataSubtitle: StatSection.periodVideos.dataSubtitle,
                                                  dataRows: videosDataRows(),
-                                                 siteStatsPeriodDelegate: periodDelegate))
+                                                 siteStatsPeriodDelegate: periodDelegate, rowStatus: .idle))
 
         return tableRows
     }
@@ -504,7 +506,7 @@ private extension SiteStatsPeriodViewModel {
         tableRows.append(TopTotalsPeriodStatsRow(itemSubtitle: StatSection.periodFileDownloads.itemSubtitle,
                                                  dataSubtitle: StatSection.periodFileDownloads.dataSubtitle,
                                                  dataRows: fileDownloadsDataRows(),
-                                                 siteStatsPeriodDelegate: periodDelegate))
+                                                 siteStatsPeriodDelegate: periodDelegate, rowStatus: .idle))
 
         return tableRows
     }

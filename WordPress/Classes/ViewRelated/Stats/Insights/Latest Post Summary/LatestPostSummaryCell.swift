@@ -106,7 +106,7 @@ private extension LatestPostSummaryCell {
         case .viewMore:
             toggleDataViews(hide: false)
             configureChartView()
-            addRows(createDataRows(), toStackView: rowsStackView, forType: .insights, limitRowsDisplayed: false)
+            addRows(createDataRows(), toStackView: rowsStackView, forType: .insights, limitRowsDisplayed: false, rowStatus: .idle)
             actionLabel.text = CellStrings.viewMore
         case .sharePost:
             toggleDataViews(hide: true)

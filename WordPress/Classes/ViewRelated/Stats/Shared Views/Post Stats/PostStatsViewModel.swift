@@ -154,7 +154,8 @@ private extension PostStatsViewModel {
                                                dataSubtitle: dataSubtitle,
                                                dataRows: yearsDataRows(forAverages: forAverages),
                                                limitRowsDisplayed: true,
-                                               postStatsDelegate: postStatsDelegate))
+                                               postStatsDelegate: postStatsDelegate,
+                                               rowStatus: .idle))
 
         return tableRows
     }
@@ -201,7 +202,7 @@ private extension PostStatsViewModel {
                                                dataSubtitle: StatSection.postStatsRecentWeeks.dataSubtitle,
                                                dataRows: recentWeeksDataRows(),
                                                limitRowsDisplayed: false,
-                                               postStatsDelegate: postStatsDelegate))
+                                               postStatsDelegate: postStatsDelegate, rowStatus: .idle))
 
         return tableRows
     }
