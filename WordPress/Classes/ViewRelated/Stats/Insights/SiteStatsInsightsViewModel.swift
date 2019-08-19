@@ -477,7 +477,7 @@ private extension SiteStatsInsightsViewModel {
                        itemSubtitle: followerType.itemSubtitle,
                        dataSubtitle: followerType.dataSubtitle,
                        totalCount: totalCount,
-                       dataRows: [])
+                       dataRows: followersData ?? [])
     }
 
     func createAddInsightRow() -> StatsTotalRowData {
