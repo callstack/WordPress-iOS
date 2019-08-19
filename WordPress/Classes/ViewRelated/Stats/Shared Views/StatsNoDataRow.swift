@@ -17,7 +17,6 @@ class StatsNoDataRow: UIView, NibLoadable, Accessible {
     func configure(forType statType: StatType, rowStatus: StoreFetchingStatus = .idle) {
         WPStyleGuide.Stats.configureLabelAsNoData(noDataLabel)
         setText(for: statType, rowStatus: rowStatus)
-        animateGhostView(rowStatus == .loading)
         prepareForVoiceOver()
     }
 
@@ -30,21 +29,14 @@ class StatsNoDataRow: UIView, NibLoadable, Accessible {
 }
 
 private extension StatsNoDataRow {
-    func animateGhostView(_ animate: Bool) {
-        noDataLabel.isGhostableDisabled = false
-        if animate {
-            startGhostAnimation()
-        } else {
-            stopGhostAnimation()
-        }
-    }
-
     func setText(for statType: StatType, rowStatus: StoreFetchingStatus) {
         switch rowStatus {
         case .success, .idle:
             noDataLabel.text = statType == .insights ? insightsNoDataLabel : periodNoDataLabel
-        default:
+        case .error:
             noDataLabel.text = errorDataLabel
+        default:
+            noDataLabel.text = ""
         }
     }
 }
