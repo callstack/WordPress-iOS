@@ -401,13 +401,14 @@ private extension StatsInsightsStore {
     }
 
     func receivedLastPostInsight(_ lastPostInsight: StatsLastPostInsight?, _ error: Error?) {
+        if lastPostInsight != nil {
+            state.lastPostInsight = lastPostInsight
+            fetchStatsForInsightsLatestPost()
+            return
+        }
         transaction { state in
-            if lastPostInsight != nil {
-                state.lastPostInsight = lastPostInsight
-            }
             state.lastPostSummaryStatus = error != nil ? .error : .success
         }
-        fetchStatsForInsightsLatestPost()
     }
 
     func receivedAllTimeStats(_ allTimeStats: StatsAllTimesInsight?, _ error: Error?) {
