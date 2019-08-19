@@ -5,23 +5,25 @@ class LatestPostSummaryCell: UITableViewCell, NibLoadable {
 
     // MARK: - Properties
 
-    @IBOutlet weak var summaryLabel: UILabel!
-    @IBOutlet weak var contentStackViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private var summaryLabel: UILabel!
+    @IBOutlet private var contentStackViewTopConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var viewsStackView: UIStackView!
-    @IBOutlet weak var chartStackView: UIStackView!
-    @IBOutlet weak var rowsStackView: UIStackView!
-    @IBOutlet weak var actionStackView: UIStackView!
+    @IBOutlet private var viewsStackView: UIStackView!
+    @IBOutlet private var chartStackView: UIStackView!
+    @IBOutlet private var rowsStackView: UIStackView!
+    @IBOutlet private var actionStackView: UIStackView!
 
-    @IBOutlet weak var viewsLabel: UILabel!
-    @IBOutlet weak var viewsDataLabel: UILabel!
+    @IBOutlet private var viewsLabel: UILabel!
+    @IBOutlet private var viewsDataLabel: UILabel!
 
-    @IBOutlet weak var actionLabel: UILabel!
-    @IBOutlet weak var actionImageView: UIImageView!
-    @IBOutlet weak var disclosureImageView: UIImageView!
+    @IBOutlet private var actionLabel: UILabel!
+    @IBOutlet private var actionImageView: UIImageView!
+    @IBOutlet private var disclosureImageView: UIImageView!
 
-    @IBOutlet weak var topSeparatorLine: UIView!
-    @IBOutlet weak var bottomSeparatorLine: UIView!
+    @IBOutlet private var topSeparatorLine: UIView!
+    @IBOutlet private var bottomSeparatorLine: UIView!
+
+    @IBOutlet private var actionButton: UIButton!
 
     private weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
     private typealias Style = WPStyleGuide.Stats
@@ -53,6 +55,8 @@ class LatestPostSummaryCell: UITableViewCell, NibLoadable {
         siteStatsInsightsDelegate = delegate
         self.rowStatus = rowStatus
 
+        animateGhostView(rowStatus == .loading)
+
         // If there is no summary data, there is no post. Show Create Post option.
         guard let lastPostInsight = lastPostInsight else {
             actionType = .createPost
@@ -79,6 +83,14 @@ class LatestPostSummaryCell: UITableViewCell, NibLoadable {
 // MARK: - Private Extension
 
 private extension LatestPostSummaryCell {
+    func animateGhostView(_ animate: Bool) {
+        actionButton.isGhostableDisabled = true
+        if animate {
+            startGhostAnimation()
+        } else {
+            stopGhostAnimation()
+        }
+    }
 
     func applyStyles() {
 
