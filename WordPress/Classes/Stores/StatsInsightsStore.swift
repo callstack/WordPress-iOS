@@ -65,23 +65,19 @@ struct InsightStoreState {
     var emailFollowersStatus: StoreFetchingStatus = .idle
 
     var publicizeFollowers: StatsPublicizeInsight?
-    var fetchingPublicize = false
-    var fetchingPublicizeHasFailed = false
+    var publicizeFollowersStatus: StoreFetchingStatus = .idle
 
     var topCommentsInsight: StatsCommentsInsight?
-    var fetchingCommentsInsight = false
-    var fetchingCommentsInsightHasFailed = false
+    var commentsInsightStatus: StoreFetchingStatus = .idle
 
     var todaysStats: StatsTodayInsight?
     var todaysStatsStatus: StoreFetchingStatus = .idle
 
     var postingActivity: StatsPostingStreakInsight?
-    var fetchingPostingActivity = false
-    var fetchingPostingActivityHasFailed = false
+    var postingActivityStatus: StoreFetchingStatus = .idle
 
     var topTagsAndCategories: StatsTagsAndCategoriesInsight?
-    var fetchingTagsAndCategories = false
-    var fetchingTagsAndCategoriesHasFailed = false
+    var tagsAndCategoriesStatus: StoreFetchingStatus = .idle
 
     // Insights details
 
@@ -455,8 +451,7 @@ private extension StatsInsightsStore {
             if followerStats != nil {
                 state.publicizeFollowers = followerStats
             }
-            state.fetchingPublicize = false
-            state.fetchingPublicizeHasFailed = error != nil
+            state.publicizeFollowersStatus = error != nil ? .error : .success
         }
     }
 
@@ -465,8 +460,7 @@ private extension StatsInsightsStore {
             if commentsInsight != nil {
                 state.topCommentsInsight = commentsInsight
             }
-            state.fetchingCommentsInsight = false
-            state.fetchingCommentsInsightHasFailed = error != nil
+            state.commentsInsightStatus = error != nil ? .error : .success
         }
     }
 
@@ -484,8 +478,7 @@ private extension StatsInsightsStore {
             if postingActivity != nil {
                 state.postingActivity = postingActivity
             }
-            state.fetchingPostingActivity = false
-            state.fetchingPostingActivityHasFailed = error != nil
+            state.postingActivityStatus = error != nil ? .error : .success
         }
     }
 
@@ -494,8 +487,7 @@ private extension StatsInsightsStore {
             if tagsAndCategories != nil {
                 state.topTagsAndCategories = tagsAndCategories
             }
-            state.fetchingTagsAndCategories = false
-            state.fetchingTagsAndCategoriesHasFailed = error != nil
+            state.tagsAndCategoriesStatus = error != nil ? .error : .success
         }
     }
 
@@ -506,6 +498,10 @@ private extension StatsInsightsStore {
         state.dotComFollowersStatus = status
         state.emailFollowersStatus = status
         state.todaysStatsStatus = status
+        state.tagsAndCategoriesStatus = status
+        state.publicizeFollowersStatus = status
+        state.commentsInsightStatus = status
+        state.postingActivityStatus = status
     }
 
     func shouldFetchOverview() -> Bool {
@@ -824,6 +820,22 @@ extension StatsInsightsStore {
         return state.todaysStatsStatus
     }
 
+    var tagsAndCategoriesStatus: StoreFetchingStatus {
+        return state.tagsAndCategoriesStatus
+    }
+
+    var publicizeFollowersStatus: StoreFetchingStatus {
+        return state.publicizeFollowersStatus
+    }
+
+    var commentsInsightStatus: StoreFetchingStatus {
+        return state.commentsInsightStatus
+    }
+
+    var postingActivityStatus: StoreFetchingStatus {
+        return state.postingActivityStatus
+    }
+
     var followersTotalsStatus: StoreFetchingStatus {
         switch (state.dotComFollowersStatus, state.emailFollowersStatus) {
         case (let a, let b) where a == .loading || b == .loading:
@@ -875,7 +887,11 @@ extension StatsInsightsStore {
             state.annualAndMostPopularTimeStatus == .error &&
             state.dotComFollowersStatus == .error &&
             state.emailFollowersStatus == .error &&
-            state.todaysStatsStatus == .error
+            state.todaysStatsStatus == .error &&
+            state.tagsAndCategoriesStatus == .error &&
+            state.publicizeFollowersStatus == .error &&
+            state.commentsInsightStatus == .error &&
+            state.postingActivityStatus == .error
     }
 
     func fetchingFailed(for query: InsightQuery) -> Bool {
