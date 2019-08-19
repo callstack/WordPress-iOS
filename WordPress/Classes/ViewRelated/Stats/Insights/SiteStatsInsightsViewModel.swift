@@ -68,22 +68,19 @@ class SiteStatsInsightsViewModel: Observable {
                                                       rowStatus: insightsStore.lastPostSummaryStatus))
             case .allTimeStats:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsAllTime.title))
-                tableRows.append(TwoColumnStatsRow(dataRows: createAllTimeStatsRows(),
-                                                   statSection: .insightsAllTime,
-                                                   siteStatsInsightsDelegate: nil,
-                                                   rowStatus: insightsStore.allTimeStatus))
+                tableRows.append(createTwoColumnStatsRow(dataRows: createAllTimeStatsRows(),
+                                                         statSection: .insightsAllTime,
+                                                         rowStatus: insightsStore.allTimeStatus))
             case .followersTotals:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsFollowerTotals.title))
-                tableRows.append(TwoColumnStatsRow(dataRows: createTotalFollowersRows(),
-                                                   statSection: .insightsFollowerTotals,
-                                                   siteStatsInsightsDelegate: nil,
-                                                   rowStatus: insightsStore.followersTotalsStatus))
+                tableRows.append(createTwoColumnStatsRow(dataRows: createTotalFollowersRows(),
+                                                         statSection: .insightsFollowerTotals,
+                                                         rowStatus: insightsStore.followersTotalsStatus))
             case .mostPopularTime:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsMostPopularTime.title))
-                tableRows.append(TwoColumnStatsRow(dataRows: createMostPopularStatsRows(),
-                                                   statSection: .insightsMostPopularTime,
-                                                   siteStatsInsightsDelegate: nil,
-                                                   rowStatus: insightsStore.annualAndMostPopularTimeStatus))
+                tableRows.append(createTwoColumnStatsRow(dataRows: createMostPopularStatsRows(),
+                                                         statSection: .insightsMostPopularTime,
+                                                         rowStatus: insightsStore.annualAndMostPopularTimeStatus))
             case .tagsAndCategories:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsTagsAndCategories.title))
                 tableRows.append(TopTotalsInsightStatsRow(itemSubtitle: StatSection.insightsTagsAndCategories.itemSubtitle,
@@ -92,10 +89,10 @@ class SiteStatsInsightsViewModel: Observable {
                                                    siteStatsInsightsDelegate: siteStatsInsightsDelegate))
             case .annualSiteStats:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsAnnualSiteStats.title))
-                tableRows.append(TwoColumnStatsRow(dataRows: createAnnualRows(),
-                                                   statSection: .insightsAnnualSiteStats,
-                                                   siteStatsInsightsDelegate: siteStatsInsightsDelegate,
-                                                   rowStatus: insightsStore.annualAndMostPopularTimeStatus))
+                tableRows.append(createTwoColumnStatsRow(dataRows: createAnnualRows(),
+                                                         statSection: .insightsAnnualSiteStats,
+                                                         siteStatsInsightsDelegate: siteStatsInsightsDelegate,
+                                                         rowStatus: insightsStore.annualAndMostPopularTimeStatus))
             case .comments:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsCommentsPosts.title))
                 tableRows.append(createCommentsRow())
@@ -104,10 +101,9 @@ class SiteStatsInsightsViewModel: Observable {
                 tableRows.append(createFollowersRow())
             case .todaysStats:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsTodaysStats.title))
-                tableRows.append(TwoColumnStatsRow(dataRows: createTodaysStatsRows(),
-                                                   statSection: .insightsTodaysStats,
-                                                   siteStatsInsightsDelegate: nil,
-                                                   rowStatus: insightsStore.todaysStatsStatus))
+                tableRows.append(createTwoColumnStatsRow(dataRows: createTodaysStatsRows(),
+                                                         statSection: .insightsTodaysStats,
+                                                         rowStatus: insightsStore.todaysStatsStatus))
             case .postingActivity:
                 tableRows.append(CellHeaderRow(title: StatSection.insightsPostingActivity.title))
                 tableRows.append(createPostingActivityRow())
@@ -212,6 +208,16 @@ private extension SiteStatsInsightsViewModel {
                                                    rightColumnData: allTimeInsight.bestViewsPerDayCount.abbreviatedString()))
 
         return dataRows
+    }
+
+    func createTwoColumnStatsRow(dataRows: [StatsTwoColumnRowData],
+                                 statSection: StatSection,
+                                 siteStatsInsightsDelegate: SiteStatsInsightsDelegate? = nil,
+                                 rowStatus: StoreFetchingStatus) -> TwoColumnStatsRow {
+        return TwoColumnStatsRow(dataRows: dataRows,
+                                 statSection: statSection,
+                                 siteStatsInsightsDelegate: siteStatsInsightsDelegate,
+                                 rowStatus: rowStatus)
     }
 
     func createMostPopularStatsRows() -> [StatsTwoColumnRowData] {
