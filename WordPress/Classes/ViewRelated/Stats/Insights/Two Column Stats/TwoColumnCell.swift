@@ -30,7 +30,7 @@ class TwoColumnCell: UITableViewCell, NibLoadable {
         removeRowsFromStackView(rowsStackView)
     }
 
-    func configure(dataRows: [StatsTwoColumnRowData], statSection: StatSection, siteStatsInsightsDelegate: SiteStatsInsightsDelegate?, rowStatus: StoreFetchingStatus = .loading) {
+    func configure(dataRows: [StatsTwoColumnRowData], statSection: StatSection, siteStatsInsightsDelegate: SiteStatsInsightsDelegate?, rowStatus: StoreFetchingStatus) {
         self.dataRows = dataRows
         self.statSection = statSection
         self.siteStatsInsightsDelegate = siteStatsInsightsDelegate
@@ -52,17 +52,21 @@ private extension TwoColumnCell {
     }
 
     func addRows() {
-        guard !dataRows.isEmpty else {
-            let row = StatsNoDataRow.loadFromNib()
-            row.configure(forType: .insights, rowStatus: rowStatus)
-            rowsStackView.addArrangedSubview(row)
-            return
-        }
-
-        for dataRow in dataRows {
+        switch (dataRows.isEmpty, rowStatus) {
+        case (true, .loading):
             let row = StatsTwoColumnRow.loadFromNib()
-            row.configure(rowData: dataRow)
+            row.startGhostAnimation()
             rowsStackView.addArrangedSubview(row)
+        case (true, let status) where status != .loading:
+            let row = StatsNoDataRow.loadFromNib()
+            row.configure(forType: .insights, rowStatus: status)
+            rowsStackView.addArrangedSubview(row)
+        default:
+            for dataRow in dataRows {
+                let row = StatsTwoColumnRow.loadFromNib()
+                row.configure(rowData: dataRow)
+                rowsStackView.addArrangedSubview(row)
+            }
         }
     }
 
