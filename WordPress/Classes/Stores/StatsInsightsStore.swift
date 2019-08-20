@@ -409,6 +409,7 @@ private extension StatsInsightsStore {
         transaction { state in
             state.lastPostSummaryStatus = error != nil ? .error : .success
         }
+        fetchOverview()
     }
 
     func receivedAllTimeStats(_ allTimeStats: StatsAllTimesInsight?, _ error: Error?) {
