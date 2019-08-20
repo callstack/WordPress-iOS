@@ -50,7 +50,7 @@ class SiteStatsInsightsViewModel: Observable {
 
         var tableRows = [ImmuTableRow]()
 
-        if insightsStore.fetchingFailed(for: .insights) {
+        if insightsStore.fetchingFailed(for: .insights) && !insightsStore.containsCachedData {
             return ImmuTable.Empty
         }
 
