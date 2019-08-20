@@ -141,6 +141,12 @@ class StatsTotalRow: UIView, NibLoadable, Accessible {
         return rowData?.hasIcon ?? false
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        disclosureButton.isGhostableDisabled = true
+    }
+
     // MARK: - Configure
 
     func configure(rowData: StatsTotalRowData,

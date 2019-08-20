@@ -79,6 +79,7 @@ class TabbedTotalsCell: UITableViewCell, NibLoadable {
         addRowsForSelectedFilter()
         configureSubtitles()
         applyStyles()
+        animateGhostView(rowStatus == .loading)
     }
 
     override func prepareForReuse() {
@@ -93,6 +94,13 @@ class TabbedTotalsCell: UITableViewCell, NibLoadable {
 // MARK: - FilterTabBar Support
 
 private extension TabbedTotalsCell {
+    func animateGhostView(_ animate: Bool) {
+        if animate {
+            startGhostAnimation()
+        } else {
+            stopGhostAnimation()
+        }
+    }
 
     func setupFilterBar(selectedIndex: Int) {
         WPStyleGuide.Stats.configureFilterTabBar(filterTabBar, forTabbedCard: true)
