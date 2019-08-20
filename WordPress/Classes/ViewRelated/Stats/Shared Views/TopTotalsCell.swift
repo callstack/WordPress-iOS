@@ -69,6 +69,7 @@ class TopTotalsCell: UITableViewCell, NibLoadable {
         setSubtitleVisibility()
         applyStyles()
         prepareForVoiceOver()
+        animateGhostView(rowStatus == .loading)
     }
 
     override func prepareForReuse() {
@@ -94,8 +95,17 @@ class TopTotalsCell: UITableViewCell, NibLoadable {
 // MARK: - Private Extension
 
 private extension TopTotalsCell {
+    func animateGhostView(_ animate: Bool) {
+        if animate {
+            startGhostAnimation()
+        } else {
+            stopGhostAnimation()
+        }
+    }
 
     func applyStyles() {
+        rowsStackView.isGhostableDisabled = true
+
         Style.configureCell(self)
         Style.configureLabelAsSubtitle(itemSubtitleLabel)
         Style.configureLabelAsSubtitle(dataSubtitleLabel)
