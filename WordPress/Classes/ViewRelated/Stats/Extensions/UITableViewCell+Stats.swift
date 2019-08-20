@@ -18,11 +18,9 @@ extension UITableViewCell {
                  rowStatus: StoreFetchingStatus) {
         switch (dataRows.isEmpty, rowStatus) {
         case (true, .loading):
-            for _ in 0...2 {
-                let row = StatsTotalRow.loadFromNib()
-                row.startGhostAnimation()
-                rowsStackView.addArrangedSubview(row)
-            }
+            let row = StatsTotalRow.loadFromNib()
+            row.startGhostAnimation()
+            rowsStackView.addArrangedSubview(row)
             return
         case (true, let status) where status != .loading:
             let row = StatsNoDataRow.loadFromNib()
