@@ -16,15 +16,24 @@ extension UITableViewCell {
                  rowDelegate: StatsTotalRowDelegate? = nil,
                  viewMoreDelegate: ViewMoreRowDelegate? = nil,
                  rowStatus: StoreFetchingStatus) {
-
-        let numberOfDataRows = dataRows.count
-
-        guard numberOfDataRows > 0 else {
+        switch (dataRows.isEmpty, rowStatus) {
+        case (true, .loading):
+            for _ in 0...2 {
+                let row = StatsTotalRow.loadFromNib()
+                row.startGhostAnimation()
+                rowsStackView.addArrangedSubview(row)
+            }
+            return
+        case (true, let status) where status != .loading:
             let row = StatsNoDataRow.loadFromNib()
-            row.configure(forType: statType, rowStatus: rowStatus)
+            row.configure(forType: statType, rowStatus: status)
             rowsStackView.addArrangedSubview(row)
             return
+        default:
+            break
         }
+
+        let numberOfDataRows = dataRows.count
 
         let maxRows = StatsDataHelper.maxRowsToDisplay
 
