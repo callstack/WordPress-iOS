@@ -337,8 +337,11 @@ private extension SiteStatsInsightsViewModel {
         }
 
         monthsData.append(insightsStore.getMonthlyPostingActivityFor(date: Date()))
-
-        return PostingActivityRow(monthsData: monthsData, siteStatsInsightsDelegate: siteStatsInsightsDelegate, rowStatus: insightsStore.postingActivityStatus)
+        let hasCachedData = insightsStore.getPostingActivity() != nil
+        return PostingActivityRow(monthsData: monthsData,
+                                  siteStatsInsightsDelegate: siteStatsInsightsDelegate,
+                                  rowStatus: insightsStore.postingActivityStatus,
+                                  hasCachedData: hasCachedData)
     }
 
     func createTagsAndCategoriesRows() -> [StatsTotalRowData] {

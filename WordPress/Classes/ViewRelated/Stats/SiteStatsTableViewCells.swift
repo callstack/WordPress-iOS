@@ -125,6 +125,7 @@ struct PostingActivityRow: ImmuTableRow {
     weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
     let action: ImmuTableAction? = nil
     let rowStatus: StoreFetchingStatus
+    let hasCachedData: Bool
 
     func configureCell(_ cell: UITableViewCell) {
 
@@ -132,7 +133,7 @@ struct PostingActivityRow: ImmuTableRow {
             return
         }
 
-        cell.configure(withData: monthsData, andDelegate: siteStatsInsightsDelegate, rowStatus: rowStatus)
+        cell.configure(withData: monthsData, andDelegate: siteStatsInsightsDelegate, rowStatus: rowStatus, hasCachedData: hasCachedData)
     }
 }
 

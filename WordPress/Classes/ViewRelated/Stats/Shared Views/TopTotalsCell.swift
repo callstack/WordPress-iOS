@@ -69,7 +69,7 @@ class TopTotalsCell: UITableViewCell, NibLoadable {
         setSubtitleVisibility()
         applyStyles()
         prepareForVoiceOver()
-        animateGhostView(rowStatus == .loading)
+        animateGhostView(rowStatus == .loading && dataRows.isEmpty)
     }
 
     override func prepareForReuse() {

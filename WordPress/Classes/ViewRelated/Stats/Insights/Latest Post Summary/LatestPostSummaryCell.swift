@@ -55,7 +55,7 @@ class LatestPostSummaryCell: UITableViewCell, NibLoadable {
         siteStatsInsightsDelegate = delegate
         self.rowStatus = rowStatus
 
-        animateGhostView(rowStatus == .loading)
+        animateGhostView(rowStatus == .loading && lastPostInsight == nil && chartData == nil)
 
         // If there is no summary data, there is no post. Show Create Post option.
         guard let lastPostInsight = lastPostInsight else {

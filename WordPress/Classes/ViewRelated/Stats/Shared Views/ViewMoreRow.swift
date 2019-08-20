@@ -8,7 +8,8 @@ class ViewMoreRow: UIView, NibLoadable, Accessible {
 
     // MARK: - Properties
 
-    @IBOutlet weak var viewMoreLabel: UILabel!
+    @IBOutlet private var viewMoreLabel: UILabel!
+    @IBOutlet private var actionButton: UIButton!
 
     private var statSection: StatSection?
     private weak var delegate: ViewMoreRowDelegate?
@@ -18,6 +19,7 @@ class ViewMoreRow: UIView, NibLoadable, Accessible {
     func configure(statSection: StatSection?, delegate: ViewMoreRowDelegate?) {
         self.statSection = statSection
         self.delegate = delegate
+        actionButton.isGhostableDisabled = true
         applyStyles()
         prepareForVoiceOver()
     }

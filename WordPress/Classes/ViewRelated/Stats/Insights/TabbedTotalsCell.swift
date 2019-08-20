@@ -79,7 +79,8 @@ class TabbedTotalsCell: UITableViewCell, NibLoadable {
         addRowsForSelectedFilter()
         configureSubtitles()
         applyStyles()
-        animateGhostView(rowStatus == .loading)
+        let containsData = tabsData.first { !$0.dataRows.isEmpty } != nil
+        animateGhostView(rowStatus == .loading && !containsData)
     }
 
     override func prepareForReuse() {
