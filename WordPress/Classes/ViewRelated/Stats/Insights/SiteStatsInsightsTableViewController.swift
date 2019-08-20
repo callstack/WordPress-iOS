@@ -223,11 +223,11 @@ extension SiteStatsInsightsTableViewController: NoResultsViewHost {
             return
         }
 
-        updateNoResults(title: NoResultConstants.errorTitle,
-                        subtitle: NoResultConstants.errorSubtitle,
-                        buttonTitle: NoResultConstants.refreshButtonTitle) { [weak self] noResults in
-                            noResults.delegate = self
-                            noResults.hideImageView()
+        configureAndDisplayNoResults(on: tableView,
+                                     title: NoResultConstants.errorTitle,
+                                     subtitle: NoResultConstants.errorSubtitle,
+                                     buttonTitle: NoResultConstants.refreshButtonTitle) { [weak self] noResults in
+                                        noResults.delegate = self
         }
     }
 
@@ -349,10 +349,7 @@ extension SiteStatsInsightsTableViewController: SiteStatsInsightsDelegate {
 
 extension SiteStatsInsightsTableViewController: NoResultsViewControllerDelegate {
     func actionButtonPressed() {
-        updateNoResults(title: NoResultConstants.successTitle,
-                        accessoryView: NoResultsViewController.loadingAccessoryView()) { noResults in
-                            noResults.hideImageView(false)
-        }
+        hideNoResults()
         addViewModelListeners()
         refreshInsights()
     }
