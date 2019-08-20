@@ -4,12 +4,14 @@ class PostingActivityCell: UITableViewCell, NibLoadable {
 
     // MARK: - Properties
 
-    @IBOutlet weak var monthsStackView: UIStackView!
-    @IBOutlet weak var viewMoreLabel: UILabel!
-    @IBOutlet weak var legendView: UIView!
+    @IBOutlet private var monthsStackView: UIStackView!
+    @IBOutlet private var viewMoreLabel: UILabel!
+    @IBOutlet private var legendView: UIView!
 
-    @IBOutlet weak var topSeparatorLine: UIView!
-    @IBOutlet weak var bottomSeparatorLine: UIView!
+    @IBOutlet private var topSeparatorLine: UIView!
+    @IBOutlet private var bottomSeparatorLine: UIView!
+
+    @IBOutlet private var actionButton: UIButton!
 
     private typealias Style = WPStyleGuide.Stats
     private weak var siteStatsInsightsDelegate: SiteStatsInsightsDelegate?
@@ -22,10 +24,10 @@ class PostingActivityCell: UITableViewCell, NibLoadable {
         addLegend()
     }
 
-    func configure(withData monthsData: [[PostingStreakEvent]], andDelegate delegate: SiteStatsInsightsDelegate?, rowStatus: StoreFetchingStatus) {
+    func configure(withData monthsData: [[PostingStreakEvent]], andDelegate delegate: SiteStatsInsightsDelegate?, rowStatus: StoreFetchingStatus, hasCachedData: Bool) {
         siteStatsInsightsDelegate = delegate
         addMonths(monthsData: monthsData)
-        animateGhostView(rowStatus == .loading)
+        animateGhostView(rowStatus == .loading && !hasCachedData)
     }
 
     override func prepareForReuse() {
@@ -38,6 +40,8 @@ class PostingActivityCell: UITableViewCell, NibLoadable {
 
 private extension PostingActivityCell {
     func animateGhostView(_ animate: Bool) {
+        actionButton.isGhostableDisabled = true
+        actionButton.isHidden = animate
         if animate {
             startGhostAnimation()
         } else {
